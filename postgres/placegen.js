@@ -2,7 +2,7 @@ const fs = require('fs');
 const csvWriter = require('csv-write-stream')
 const faker = require('faker')
 
-const totalcount = 1000000;
+const totalcount = 10000000;
 
 const writer = csvWriter();
 
