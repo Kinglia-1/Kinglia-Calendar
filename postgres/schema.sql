@@ -26,6 +26,9 @@
     checkout DATE NOT NULL,
     adults smallint NOT NULL,
     children smallint NOT NULL,
-    infants smallint NOT NULL
+    infants smallint NOT NULL,
+    nightly_fee decimal(12,2) NOT NULL,
+    cleaning_fee decimal(12,2) NOT NULL,
+    occupancy_tax_rate decimal(12,2) NOT NULL
   );
 
