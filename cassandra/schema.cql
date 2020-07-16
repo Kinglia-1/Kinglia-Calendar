@@ -5,7 +5,7 @@ CREATE KEYSPACE IF NOT EXISTS calendar WITH REPLICATION = {'class': 'SimpleStrat
 USE calendar;
 
 CREATE TABLE place_by_id (
-	place_id uuid PRIMARY KEY,
+	place_id bigint PRIMARY KEY,
   city text,
   max_capacity smallint,
   reviews smallint,
@@ -16,9 +16,9 @@ CREATE TABLE place_by_id (
 );
 
 CREATE TABLE booking_by_placeid (
-  booking_id uuid,
+  place_id bigint,
   user_id uuid,
-  place_id uuid,
+  booking_id bigint,
   checkin DATE,
   checkout DATE,
   adults smallint,

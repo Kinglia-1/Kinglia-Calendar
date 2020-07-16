@@ -6,8 +6,8 @@ import PriceBreakDown from './PriceBreakDown.jsx';
 import styles from '../../dist/style.css';
 import axios from 'axios';
 
-const placeID = Math.ceil(Math.random() * 100);
-const userID = 0;
+const placeID = Math.ceil(Math.random() * 1000000)+9000000;
+const userID = Math.ceil(Math.random() * 1000000)+9000000;
 
 class App extends React.Component {
   constructor() {
@@ -31,6 +31,7 @@ class App extends React.Component {
     this.getData();
     axios.get(`/api/user/${userID}`)
     .then( data =>{
+      console.log(data);
       this.setState({
         user: data
       })
@@ -43,8 +44,9 @@ class App extends React.Component {
       url: `/api/place/${placeID}`,
       type: 'GET',
       success: (data) => {
+        console.log(data);
         this.setState({
-          info: data[0]
+          info: data
         })
       },
       error: (err) => {
