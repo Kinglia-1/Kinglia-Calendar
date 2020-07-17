@@ -8,18 +8,23 @@ const client = new Client ({
 
 client.connect()
   .then( ()=> console.log('connected'))
-10000000
-9999999
 
 module.exports = {
   placeGet: (req,res) =>{
+    let final = {};
+    let pid = req.params.id;
     console.log('in postgres Place GET Loop')
-    let q = `SELECT * FROM place WHERE placeid=${req.params.id}`;
+    let q = `SELECT * FROM place WHERE placeid=${pid}`;
     client.query(q)
     .then((data) => {
-      console.log("Get Place Data")
-      console.log(data.rows[0]);
-      res.send(data.rows[0]);
+      final = data.rows[0];
+      let bookingsearch=`SELECT * FROM booking WHERE placeid=${pid}`;
+      return client.query(bookingsearch);
+    })
+    .then((data1) => {
+      console.log('getting booking data');
+      final.bookings = data1.rows;
+      res.send(final);
     })
     .catch((e) =>{
       console.log("error in get request: "+ e)
@@ -31,8 +36,6 @@ module.exports = {
     let q = `SELECT * FROM place WHERE placeid=${req.params.id}`;
     client.query(q)
     .then((data) => {
-      console.log("Get User Data")
-      console.log(data.rows[0]);
       res.send(data.rows[0]);
     })
     .catch((e) =>{
@@ -104,3 +107,20 @@ module.exports = {
   //   })
   // }
 }
+
+// INSERT INTO booking (bookingid,placeid,userid,checkin,checkout,adults,children,infants,nightly_fee,cleaning_fee,occupancy_tax_rate) VALUES (50000001,92843,98342,'2021-02-02','2021-02-06',4,2,1,150.00,13.00,0.2);
+
+// INSERT INTO booking (placeid,userid,checkin,checkout,adults,children,infants,nightly_fee,cleaning_fee,occupancy_tax_rate) VALUES (790996,216050,'2021-08-28','2021-08-31',3,1,1,346,83,0.15);
+
+
+
+// place_id: parseInt(data.rows[0]['place_id'].toString()),
+// avg_rating: parseFloat(data.rows[0]['avg_rating'].toString()),
+// city: data.rows[0]['city'],
+// cleaning_fee: parseFloat(data.rows[0]['cleaning_fee'].toString()),
+// max_capacity: parseInt(data.rows[0]['max_capacity'].toString()),
+// nightly_fee: parseFloat(data.rows[0]['nightly_fee'].toString()),
+// occupancy_tax_rate: parseFloat(data.rows[0]['occupancy_tax_rate'].toString()),
+// reviews: parseInt(data.rows[0]['max_capacity'].toString())
+
+//CREATE INDEX idx_place_id ON booking(placeId);

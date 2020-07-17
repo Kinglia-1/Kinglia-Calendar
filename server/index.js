@@ -18,7 +18,7 @@ const UserController = require('./Controller/User.js');
 // // get places request
 // app.get('/api/place/:id', PlaceController.get);
 //get user request
-app.get('/api/user/:id', UserController.get);
+// app.get('/api/user/:id', UserController.get);
 // post booking to user
 app.post('/api/user/:id', UserController.createBooking);
 //patch booking info
@@ -27,16 +27,16 @@ app.patch('/api/user/:userid/booking/:bookingid', UserController.modifyBooking);
 app.delete('/api/user/:userid/booking/:bookingid',UserController.deleteBooking)
 
 //Postgres start
-// const PSQL = require('./Controller/PostgresController.js');
+const PSQL = require('./Controller/PostgresController.js');
 // get places request
-// app.get('/api/place/:id', PSQL.placeGet);
+app.get('/api/place/:id', PSQL.placeGet);
 //get user request
-// app.get('/api/user/:id', PSQL.userGet);
+app.get('/api/user/:id', PSQL.userGet);
 
 // Cassandra start
-const CQL = require('./Controller/CassandraController.js');
+// const CQL = require('./Controller/CassandraController.js');
 // // get places request
-app.get('/api/place/:id', CQL.placeGet);
+// app.get('/api/place/:id', CQL.placeGet);
 // //get user request
 // app.get('/api/user/:id', PSQL.userGet);
 

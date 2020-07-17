@@ -4,7 +4,7 @@ const faker = require('faker')
 
 const totalPlaceCount = 1000000;
 const totalUserCount = 1000000;
-const totalBookingCount = 10000000;
+const totalBookingCount = 10000;
 const writer1 = csvWriter();
 const writer2 = csvWriter();
 const writer3 = csvWriter();
@@ -55,7 +55,7 @@ function randomTimeSlot(start) {
   dates.checkout = new Date(start.getTime()+Math.ceil((Math.random()*14)+1)*(24*60*60*1000)).toISOString();
    return dates;
 }
-writer3.pipe(fs.createWriteStream(`./bookingData4.csv`));
+writer3.pipe(fs.createWriteStream(`./temp.csv`));
 let bookingCounter = 0;
 
 const bookingGen = () =>{
@@ -66,11 +66,11 @@ const bookingGen = () =>{
     }
     let dates = randomTimeSlot(randomDate(new Date(2020, 8, 1), new Date(2021, 8, 1)))
     let writer3obj = {
-      bookingId: (bookingCounter+1)+(10000000*4),
+      ID: bookingCounter+1,
       userId: Math.ceil(Math.random()*(totalUserCount-1))+1,
       placeId: Math.ceil(Math.random()*(totalPlaceCount-1))+1,
-      checkin: dates.checkin,
-      checkout: dates.checkout,
+      checkin: (dates.checkin).slice(0,10),
+      checkout: (dates.checkout).slice(0,10),
       adults: Math.floor(Math.random() * 6) + 1,
       children: Math.floor(Math.random() * 3) + 1,
       infants: Math.floor(Math.random() * 2) + 0,

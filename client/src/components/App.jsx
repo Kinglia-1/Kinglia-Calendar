@@ -6,8 +6,8 @@ import PriceBreakDown from './PriceBreakDown.jsx';
 import styles from '../../dist/style.css';
 import axios from 'axios';
 
-const placeID = Math.ceil(Math.random() * 1000000)+9000000;
-const userID = Math.ceil(Math.random() * 1000000)+9000000;
+const placeID = Math.ceil(Math.random() * 1000000);
+const userID = Math.ceil(Math.random() * 1000000);
 
 class App extends React.Component {
   constructor() {
