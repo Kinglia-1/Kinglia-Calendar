@@ -4,6 +4,14 @@
 ##CSV##
 *.csv
 
+##New Relic
+newrelic.js
+
+##database config
+mongo_config.js
+psql_config.js
+cassandra_config.js
+
 ## NPM ##
 npm
 npm-debug.log

@@ -60,14 +60,16 @@ class App extends React.Component {
     let checkoutdate = new Date(this.state.checkOut);
 
     let reservation = {
-      guests: {
-        adults: this.state.adults,
-        children: this.state.children,
-        infants: this.state.infants
-      },
-      placeid: this.state.info.id,
-      checkin: checkindate.toISOString(),
-      checkout: checkoutdate.toISOString()
+      userid: userID,
+      placeid: this.state.info.placeid,
+      checkin: checkindate.toISOString().slice(0,10),
+      checkout: checkoutdate.toISOString().slice(0,10),
+      adults: this.state.adults,
+      children: this.state.children,
+      infants: this.state.infants,
+      nightly_fee: this.state.info.nightly_fee,
+      cleaning_fee: this.state.info.cleaning_fee,
+      occupancy_tax_rate: this.state.info.occupancy_tax_rate
     }
     axios.post(`/api/user/${userID}`, reservation)
     .then( res => {

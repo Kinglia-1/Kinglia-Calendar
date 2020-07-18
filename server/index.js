@@ -1,3 +1,4 @@
+require('newrelic');
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
@@ -20,7 +21,7 @@ const UserController = require('./Controller/User.js');
 //get user request
 // app.get('/api/user/:id', UserController.get);
 // post booking to user
-app.post('/api/user/:id', UserController.createBooking);
+// app.post('/api/user/:id', UserController.createBooking);
 //patch booking info
 app.patch('/api/user/:userid/booking/:bookingid', UserController.modifyBooking);
 //delete booking
@@ -32,6 +33,8 @@ const PSQL = require('./Controller/PostgresController.js');
 app.get('/api/place/:id', PSQL.placeGet);
 //get user request
 app.get('/api/user/:id', PSQL.userGet);
+//post new booking
+app.post('/api/user/:id', PSQL.newbooking);
 
 // Cassandra start
 // const CQL = require('./Controller/CassandraController.js');

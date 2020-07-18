@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const db = require('./index.js');
+const db = require('../config/mongo_config.js');
 mongoose.Promise = global.Promise;
 
 let PlaceSchema = new mongoose.Schema({

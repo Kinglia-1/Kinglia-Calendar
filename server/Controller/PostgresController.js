@@ -1,10 +1,5 @@
 const { Client } = require('pg');
-
-const client = new Client ({
-  user: 'bennylee',
-  database: 'kinglia',
-  port: '5432'
-})
+const client = require('../../config/psql_config.js');
 
 client.connect()
   .then( ()=> console.log('connected'))
@@ -43,6 +38,33 @@ module.exports = {
       res.sendStatus(400);
     })
   },
+  newbooking: (req,res) =>{
+    console.log('in postgres POST booking Loop');
+    let rec = req.body;
+    console.log(rec)
+    let postquery = `INSERT INTO booking (userid,placeid,checkin,checkout,adults,children,infants,nightly_fee,cleaning_fee,occupancy_tax_rate) VALUES (${rec.userid},${rec.placeid}, '${rec.checkin}','${rec.checkout}',${rec.adults},${rec.children},${rec.infants},${rec.nightly_fee},${rec.cleaning_fee},${rec.occupancy_tax_rate});`;
+    client.query(postquery)
+    .then(() => {
+      res.sendStatus(200);
+    })
+    .catch((e) =>{
+      console.log("error in get request: "+ e)
+      res.sendStatus(400);
+    })
+
+
+    // reservation = {
+    //   guests: {
+    //     adults: this.state.adults,
+    //     children: this.state.children,
+    //     infants: this.state.infants
+    //   },
+    //   placeid: this.state.info.id,
+    //   checkin: checkindate.toISOString(),
+    //   checkout: checkoutdate.toISOString()
+    // }
+  }
+}
 
   // createBooking: (req,res) =>{
   //   console.log('Post loop on booking');
@@ -106,7 +128,6 @@ module.exports = {
   //     res.sendStatus(400);
   //   })
   // }
-}
 
 // INSERT INTO booking (bookingid,placeid,userid,checkin,checkout,adults,children,infants,nightly_fee,cleaning_fee,occupancy_tax_rate) VALUES (50000001,92843,98342,'2021-02-02','2021-02-06',4,2,1,150.00,13.00,0.2);
 

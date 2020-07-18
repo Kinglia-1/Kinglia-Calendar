@@ -1,12 +1,5 @@
-const cassandra = require('cassandra-driver');
+const client = require('../../config/cassandra_config');
 const BigDecimal = require('cassandra-driver').types.BigDecimal;
-
-
-const client = new cassandra.Client({
-  contactPoints: ['127.0.0.1:9042'],
-  localDataCenter: 'datacenter1',
-  keyspace: 'calendar'
-});
 
 module.exports = {
   placeGet: (req,res) =>{
