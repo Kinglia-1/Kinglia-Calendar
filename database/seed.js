@@ -1,4 +1,4 @@
-const db  = require('./index.js');
+const db  = require('../config/mongo_config.js');
 const Place = require('./Place.js');
 const User = require('./User.js')
 const faker = require('faker');

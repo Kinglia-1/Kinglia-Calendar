@@ -6,18 +6,18 @@ client.connect()
 
 module.exports = {
   placeGet: (req,res) =>{
+    // console.log('in postgres place GET Loop')
     let final = {};
     let pid = req.params.id;
-    console.log('in postgres Place GET Loop')
     let q = `SELECT * FROM place WHERE placeid=${pid}`;
     client.query(q)
     .then((data) => {
       final = data.rows[0];
-      let bookingsearch=`SELECT * FROM booking WHERE placeid=${pid}`;
+      let bookingsearch=`SELECT checkin, checkout FROM booking WHERE placeid=${pid}`;
       return client.query(bookingsearch);
     })
     .then((data1) => {
-      console.log('getting booking data');
+      // console.log('getting booking data');
       final.bookings = data1.rows;
       res.send(final);
     })
@@ -34,7 +34,7 @@ module.exports = {
       res.send(data.rows[0]);
     })
     .catch((e) =>{
-      console.log("error in get request: "+ e)
+      console.log("error in user get request: "+ e)
       res.sendStatus(400);
     })
   },

@@ -4,18 +4,50 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const cors = require('cors');
 
-const app = express();
-const port = 3001;
+//setup cluster
+const cluster = require('cluster');
+const numCPUs = require('os').cpus().length;
 
-app.use(cors());
-app.use('/calendar/', express.static(__dirname + '/../client/dist'));
-app.use(bodyParser.json());
+//setup database Controller
+const PSQL = require('./Controller/PostgresController.js');
 
+
+if (cluster.isMaster) {
+  for (var i = 0; i < numCPUs; i++) {
+    cluster.fork();
+  }
+}else{
+  const app = express();
+  const port = 3001;
+
+  app.use('/', express.static(__dirname + '/../client/dist'));
+  app.use(bodyParser.json());
+  //Postgres start
+  // get places request
+  app.get('/api/place/:id', PSQL.placeGet);
+  //get user request
+  app.get('/api/user/:id', PSQL.userGet);
+  //post new booking
+  app.post('/api/user/:id', PSQL.newbooking);
+
+  app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`));
+}
+
+
+
+
+
+
+
+
+
+
+// app.use(cors());
 
 //Mongo Start
 //link to controller:
-const PlaceController = require('./Controller/Place.js');
-const UserController = require('./Controller/User.js');
+// const PlaceController = require('./Controller/Place.js');
+// const UserController = require('./Controller/User.js');
 // // get places request
 // app.get('/api/place/:id', PlaceController.get);
 //get user request
@@ -23,18 +55,9 @@ const UserController = require('./Controller/User.js');
 // post booking to user
 // app.post('/api/user/:id', UserController.createBooking);
 //patch booking info
-app.patch('/api/user/:userid/booking/:bookingid', UserController.modifyBooking);
+// app.patch('/api/user/:userid/booking/:bookingid', UserController.modifyBooking);
 //delete booking
-app.delete('/api/user/:userid/booking/:bookingid',UserController.deleteBooking)
-
-//Postgres start
-const PSQL = require('./Controller/PostgresController.js');
-// get places request
-app.get('/api/place/:id', PSQL.placeGet);
-//get user request
-app.get('/api/user/:id', PSQL.userGet);
-//post new booking
-app.post('/api/user/:id', PSQL.newbooking);
+// app.delete('/api/user/:userid/booking/:bookingid',UserController.deleteBooking)；
 
 // Cassandra start
 // const CQL = require('./Controller/CassandraController.js');
@@ -42,7 +65,3 @@ app.post('/api/user/:id', PSQL.newbooking);
 // app.get('/api/place/:id', CQL.placeGet);
 // //get user request
 // app.get('/api/user/:id', PSQL.userGet);
-
-
-
-app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`));

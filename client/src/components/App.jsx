@@ -31,7 +31,6 @@ class App extends React.Component {
     this.getData();
     axios.get(`/api/user/${userID}`)
     .then( data =>{
-      console.log(data);
       this.setState({
         user: data
       })
@@ -39,12 +38,10 @@ class App extends React.Component {
   }
 
   getData() {
-    console.log(`placeID: ${placeID}`)
     $.ajax({
       url: `/api/place/${placeID}`,
       type: 'GET',
       success: (data) => {
-        console.log(data);
         this.setState({
           info: data
         })
