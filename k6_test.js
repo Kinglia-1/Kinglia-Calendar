@@ -8,6 +8,6 @@ export const options = {
 
 export default function() {
   const placeid = Math.floor(Math.random() * 10000000)+1;
-  http.get(`http://localhost:3001/api/place/100`);
+  http.get(`http://localhost:3001/api/place/${placeid}`);
   sleep(1);
 }

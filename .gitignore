@@ -7,10 +7,17 @@
 ##New Relic
 newrelic.js
 
+## K6
+k6_test.js
+k6_test.txt
+
 ##database config
 mongo_config.js
 psql_config.js
 cassandra_config.js
+
+##loaderio
+loaderio-94deed94ae4adabbf39e7383dda1e700.txt
 
 ## NPM ##
 npm
