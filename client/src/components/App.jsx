@@ -1,5 +1,4 @@
 import React from 'react';
-import $ from 'jquery';
 import Calendar from './Calendar.jsx';
 import Guests from './Guests.jsx';
 import PriceBreakDown from './PriceBreakDown.jsx';
@@ -21,34 +20,24 @@ class App extends React.Component {
       children: 0,
       infants: 0,
       showCalendar: false,
-      showGuestsOptions: false,
-      user: {},
+      showGuestsOptions: false
     }
   }
 
 
   componentDidMount() {
     this.getData();
-    axios.get(`/api/user/${userID}`)
-    .then( data =>{
-      this.setState({
-        user: data
-      })
-    })
   }
 
   getData() {
-    $.ajax({
-      url: `/api/place/${placeID}`,
-      type: 'GET',
-      success: (data) => {
-        this.setState({
-          info: data
-        })
-      },
-      error: (err) => {
-        console.log('Error retrieving data');
-      }
+    axios.get(`/api/place/${placeID}`)
+    .then( response =>{
+      this.setState({
+        info: response.data
+      })
+    })
+    .catch( e =>{
+      console.log('error in get place: '+ e);
     })
   }
 

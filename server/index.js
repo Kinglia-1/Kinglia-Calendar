@@ -11,6 +11,8 @@ const numCPUs = require('os').cpus().length;
 //setup database Controller
 const PSQL = require('./Controller/PostgresController.js');
 
+const app = express();
+const port = 3001;
 
 if (cluster.isMaster) {
   for (var i = 0; i < numCPUs; i++) {
@@ -25,8 +27,6 @@ if (cluster.isMaster) {
   //Postgres start
   // get places request
   app.get('/api/place/:id', PSQL.placeGet);
-  //get user request
-  app.get('/api/user/:id', PSQL.userGet);
   //post new booking
   app.post('/api/user/:id', PSQL.newbooking);
 

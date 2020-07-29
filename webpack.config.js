@@ -13,14 +13,11 @@ module.exports = {
     path: DIST_DIR
   },
   module : {
-    loaders : [
+    rules : [
       {
         test : /\.jsx?/,
         include : SRC_DIR,
-        loader : 'babel-loader',
-        query: {
-          presets: ['@babel/preset-env', '@babel/preset-react']
-       }
+        use : 'babel-loader',
       },
       {
         test: /\.css$/i,
@@ -38,7 +35,12 @@ module.exports = {
       {
         test: /\.svg$/,
         loader: 'svg-inline-loader',
-      },
+      }
     ]
-  }
+  },
+  resolve: {
+    extensions: ['.js','.jsx']
+  },
+  plugins: [],
+  devServer:{}
 };
